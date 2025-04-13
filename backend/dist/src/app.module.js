@@ -12,6 +12,7 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const prisma_module_1 = require("../database/prisma.module");
 const Users_module_1 = require("./modules/Users/Users.module");
+const Documents_module_1 = require("./modules/Documents/Documents.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -19,7 +20,8 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             prisma_module_1.PrismaModule,
-            Users_module_1.UsersModule
+            Users_module_1.UsersModule,
+            Documents_module_1.DocumentsModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
