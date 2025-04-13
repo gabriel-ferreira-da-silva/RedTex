@@ -1,0 +1,11 @@
+
+model OpenAIResponses {
+  id        String   @id @default(uuid())
+  body      Bytes   
+  
+  documentId String 
+
+  document            Documents              @relation(fields: [documentId], references: [id])
+
+  createdAt DateTime @default(now())
+}

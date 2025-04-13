@@ -1,0 +1,16 @@
+model Documents {
+  id          String        @id @default(uuid()) 
+  body        Bytes      
+  description String?    
+  name        String?     
+  userId      String     
+  responseId  String?
+  extension   String?
+  createdAt   DateTime   @default(now()) 
+  
+  user            Users              @relation(fields: [userId], references: [id])
+
+  responses   OpenAIResponses[] 
+
+  @@unique([responseId]) 
+}

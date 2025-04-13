@@ -1,0 +1,14 @@
+
+model Users {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  
+  @@index([email])   
+
+  documents   Documents[] 
+
+  createdAt DateTime @default(now())
+}
