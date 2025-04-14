@@ -8,9 +8,9 @@ export declare class OpenAIResponsesService {
     analyze(dto: any): Promise<OpenAIResponseDto>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
+        createdAt: Date;
         body: string;
         documentId: string;
-        createdAt: Date;
     }[]>;
     createOpenAIResponse(dto: CreateOpenAIResponseDto): Promise<OpenAIResponseDto>;
     extractTextFromPdf(buffer: Buffer): Promise<string>;
