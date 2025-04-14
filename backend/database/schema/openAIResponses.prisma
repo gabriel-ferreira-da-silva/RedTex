@@ -1,7 +1,7 @@
 
 model OpenAIResponses {
   id        String   @id @default(uuid())
-  body      Bytes   
+  body      String   
   
   documentId String 
 

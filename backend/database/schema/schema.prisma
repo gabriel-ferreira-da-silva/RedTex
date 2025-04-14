@@ -14,3 +14,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model Users {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  
+  @@index([email])   
+
+  documents   Documents[] 
+
+  createdAt DateTime @default(now())
+}
+
+
+model Documents {
+  id          String        @id @default(uuid()) 
+  body        Bytes      
+  description String?    
+  name        String?     
+  userId      String     
+  responseId  String?
+  extension   String?
+  createdAt   DateTime   @default(now()) 
+  
+  user            Users              @relation(fields: [userId], references: [id])
+
+  responses   OpenAIResponses[] 
+
+  @@unique([responseId]) 
+}
+
+model OpenAIResponses {
+  id        String   @id @default(uuid())
+  body      String   
+  
+  documentId String 
+
+  document            Documents              @relation(fields: [documentId], references: [id])
+
+  createdAt DateTime @default(now())
+}

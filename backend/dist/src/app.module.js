@@ -13,6 +13,7 @@ const app_service_1 = require("./app.service");
 const prisma_module_1 = require("../database/prisma.module");
 const Users_module_1 = require("./modules/Users/Users.module");
 const Documents_module_1 = require("./modules/Documents/Documents.module");
+const OpenAIResponses_module_1 = require("./modules/OpenAIResponses/OpenAIResponses.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -21,7 +22,8 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             prisma_module_1.PrismaModule,
             Users_module_1.UsersModule,
-            Documents_module_1.DocumentsModule
+            Documents_module_1.DocumentsModule,
+            OpenAIResponses_module_1.OpenAIResponsesModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
