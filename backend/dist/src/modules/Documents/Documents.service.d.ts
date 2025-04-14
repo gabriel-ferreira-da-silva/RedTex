@@ -5,22 +5,22 @@ export declare class DocumentsService {
     constructor(documentsRepo: DocumentsRepository);
     findAll(): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
+        name: string | null;
+        createdAt: Date;
         body: Uint8Array;
         description: string | null;
-        name: string | null;
         userId: string;
         responseId: string | null;
         extension: string | null;
-        createdAt: Date;
     }[]>;
     createUser(dto: CreateDocumentDto): import(".prisma/client").Prisma.Prisma__DocumentsClient<{
         id: string;
+        name: string | null;
+        createdAt: Date;
         body: Uint8Array;
         description: string | null;
-        name: string | null;
         userId: string;
         responseId: string | null;
         extension: string | null;
-        createdAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
 }
