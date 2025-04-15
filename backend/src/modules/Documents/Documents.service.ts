@@ -14,4 +14,8 @@ export class DocumentsService {
     dto.body = Buffer.from(dto.body as any, 'base64');  
     return this.documentsRepo.create(dto);
   }
+
+  findById(documentId:string){
+    return this.documentsRepo.getById(documentId)
+  }
 }

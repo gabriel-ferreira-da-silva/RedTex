@@ -17,7 +17,7 @@ export async function createUser(username, password, email, name) {
   
       localStorage.setItem('token', data.access_token);
   
-      window.location.href = '/dashboard';
+      window.location.href = '/home';
 
     } catch (error) {
       console.error('register failed:', error.message);

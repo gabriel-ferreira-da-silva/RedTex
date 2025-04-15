@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { OpenAIResponsesRepository } from './OpenAIResponses.repository';
 import { OpenAIResponseDto } from './dto/OpenAIResponse.dto';
 import OpenAI from 'openai';
 import * as pdfParse from 'pdf-parse';
 import { OpenAIRequestDto } from './dto/OpenAIRequest.dto';
 import { CreateOpenAIResponseDto } from './dto/CreateOpenAIResponse.dto';
+import { DocumentsService } from '../Documents/Documents.service';
 
 import { InferenceClient } from '@huggingface/inference';
 
@@ -13,42 +14,19 @@ import { InferenceClient } from '@huggingface/inference';
 export class OpenAIResponsesService {
   private openai: OpenAI;
  
-  constructor(private readonly openAIResponseRepo: OpenAIResponsesRepository) {
+  constructor(
+    private readonly openAIResponseRepo: OpenAIResponsesRepository,
+    private readonly documentsService: DocumentsService,
+  ) {
     this.openai = new OpenAI({
       baseURL: 'https://api.deepseek.com',
       apiKey: process.env.OPENAI_API_KEY!,
     });
   }
 
-  /*
-  async analyze(dto: OpenAIRequestDto): Promise<OpenAIResponseDto> {
-    
-    const buffer = Buffer.from(dto.body as string, 'base64');
-    const extractedText = await this.extractTextFromPdf(buffer);
-    console.log(extractedText)
-    const response = await this.openai.chat.completions.create({
-      model: "deepseek-chat",
-      messages: [
-        {
-          role: 'user',
-          content: `Summarize and analyze this text, providing insights and relevant commentary:\n\n${extractedText}`,
-        },
-      ],
-    });
-
-    const openAIResponse = new CreateOpenAIResponseDto();
-
-    openAIResponse.body = response.choices[0].message?.content || '';
-    openAIResponse.documentId = dto.documentId;
-
-    return this.createOpenAIResponse(openAIResponse)
-  }
-  */
-
-  
-async analyze(dto) {
-  const buffer = Buffer.from(dto.body, 'base64');
-  const extractedText = await this.extractTextFromPdf(buffer);
+  async analyze(dto: OpenAIRequestDto) {
+  const extractedText = await this.extractTextFromPdf(dto.body);
+  //const extractedText = await this.extractTextFromPdf(buffer);
   console.log(extractedText);
 
   const client = new InferenceClient(process.env.HF_ACCESS_TOKEN);
@@ -73,6 +51,7 @@ async analyze(dto) {
 
 }
 
+
   findAll() {
     return this.openAIResponseRepo.getAll();
   }
@@ -84,6 +63,20 @@ async analyze(dto) {
   async extractTextFromPdf(buffer: Buffer): Promise<string> {
     const data = await pdfParse(buffer);
     return data.text;
+  }
+
+  async analyzeFromDocumentId(documentId: string): Promise<OpenAIResponseDto> {
+    const document = await this.documentsService.findById(documentId);
+    
+    if (!document) {
+      throw new NotFoundException(`Document with ID ${documentId} not found`);
+    }
+  
+    const openAIRequest = new OpenAIRequestDto();
+    openAIRequest.body = Buffer.from(document.body); 
+    openAIRequest.documentId = document.id;
+  
+    return this.analyze(openAIRequest);
   }
   
 }

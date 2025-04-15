@@ -20,8 +20,13 @@ export class OpenAIResponseController {
     return this.OpenAIResponsesService.createOpenAIResponse(body);
   }
 
-  @Post("/analyze")
-  analyze(@Body() body: OpenAIRequestDto ): Promise<OpenAIResponseDto>{
+  @Post("/documentAnalyzis")
+  documentAnalyzis(@Body() body: OpenAIRequestDto ): Promise<OpenAIResponseDto>{
     return this.OpenAIResponsesService.analyze(body);
+  }
+
+  @Post("/analyzis")
+  analyze(@Body() body: { documentId: string } ): Promise<OpenAIResponseDto>{
+    return this.OpenAIResponsesService.analyzeFromDocumentId(body.documentId);
   }
 }
