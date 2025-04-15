@@ -1,0 +1,17 @@
+.banner {
+  display: flex;
+  align-items: center;
+  padding: 5px 5px;
+}
+
+.logo {
+  height: 40px; /* adjust as needed */
+  margin-right: 12px;
+}
+
+.title {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 50px;
+  font-weight: bold;
+  color: black; /* nice bold red tone, feel free to change */
+}
