@@ -7,6 +7,6 @@ export class OpenAIRequestDto {
   documentId: string;
 
   @IsNotEmpty()
-  body: string;
+  body: Buffer;
 
 }

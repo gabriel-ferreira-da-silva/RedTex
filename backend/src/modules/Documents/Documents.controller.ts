@@ -1,5 +1,5 @@
 
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DocumentsService } from './Documents.service';
 import { CreateDocumentDto } from './dto/CreateDocument.dto';
 @Controller('documents')
@@ -16,4 +16,10 @@ export class DocumentsController {
   create(@Body() body: CreateDocumentDto ) {
     return this.documentsService.createUser(body);
   }
+
+  @Get("/:documentId")
+  findById(@Param("documentId") documentId: string) {
+    return this.documentsService.findById(documentId);
+  }
+  
 }
