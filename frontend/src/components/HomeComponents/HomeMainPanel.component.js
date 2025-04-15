@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import styles from './Home.module.css';
 import upload from '../../assets/upload.svg';
+import ai from '../../assets/ai.svg';
+import FileView from './FileView.component';
 
 export default function HomeMainPanel() {
   const fileInputRef = useRef(null);
-  const [uploadedFile, setUploadedFile] = useState(null); // ⬅ store uploaded file
+  const [uploadedFile, setUploadedFile] = useState(null); 
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -37,11 +39,9 @@ export default function HomeMainPanel() {
       const data = await response.json();
       console.log('Upload success:', data);
       
-      // Reconstruct Uint8Array from the object of bytes
       const byteValues = Object.values(data.body);
       const byteArray = new Uint8Array(byteValues);
       
-      // Create Blob and Object URL
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       const fileUrl = URL.createObjectURL(blob);
       
@@ -67,10 +67,12 @@ export default function HomeMainPanel() {
 
   return (
     <div className={styles.container}>
+
       <div className={styles.uploadButton} onClick={handleUploadClick}>
         <div className={styles.textButton}>Upload File</div>
         <img src={upload} alt="upload" className={styles.imageButton} />
       </div>
+
       <input
         type="file"
         ref={fileInputRef}
@@ -79,19 +81,17 @@ export default function HomeMainPanel() {
       />
 
       {uploadedFile && (
-        <div className={styles.previewSection}>
-          <h3>Uploaded File: {uploadedFile.name}</h3>
-          {uploadedFile.extension === 'pdf' ? (
-            <iframe
-              src={uploadedFile.url}
-              title="Uploaded PDF"
-              className={styles.previewFrame}
-            />
-          ) : (
-            <a href={uploadedFile.url} download={uploadedFile.name}>
-              Download {uploadedFile.name}
-            </a>
-          )}
+        <div className={styles.viewAndChatContainer}>
+          <div className={styles.previewSection}>
+            <FileView uploadedFile={uploadedFile} />
+          </div>
+          <div className={styles.textAndButtonContainer}>
+            <p>Any additional text here</p>
+            <div className={styles.uploadButton} onClick={handleUploadClick}>
+              <div className={styles.textButton}>AI analysis</div>
+              <img src={ai} alt="upload" className={styles.imageButton} />
+            </div>
+          </div>
         </div>
       )}
 
