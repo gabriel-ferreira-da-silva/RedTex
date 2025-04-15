@@ -17,7 +17,7 @@ export async function handleLogin(username, password) {
   
       localStorage.setItem('token', data.access_token);
   
-      window.location.href = '/dashboard';
+      window.location.href = '/home';
 
     } catch (error) {
       console.error('Login failed:', error.message);

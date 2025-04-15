@@ -1,11 +1,12 @@
 .banner {
   display: flex;
   align-items: center;
-  padding: 5px 5px;
+  height: 40px;
+  padding: 10px;
 }
 
 .logo {
-  height: 40px; /* adjust as needed */
+  height: 40px; 
   margin-right: 12px;
 }
 
@@ -13,5 +14,5 @@
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 50px;
   font-weight: bold;
-  color: black; /* nice bold red tone, feel free to change */
+  color: black; 
 }

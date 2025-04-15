@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usernameHolder{
+    display: flex;
+    margin-right: 10px;
+    font-size: larger;
+    font-weight: 600;
+    color: grey;
+}
