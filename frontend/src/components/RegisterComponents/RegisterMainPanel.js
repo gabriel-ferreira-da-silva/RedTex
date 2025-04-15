@@ -1,28 +1,43 @@
 import React, { useState } from 'react';
-import styles from './Login.module.css';
-import { handleLogin } from '../../services/Auth.services';
+import styles from './Register.module.css';
+import { createUser } from '../../services/User.services';
 import Banner from '../CommomComponents/Banner/Banner.component';
 
-export default function LoginMainPanel() {
+export default function RegisterMainPanel() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name,setName] = useState('');
   
   const handleSubmit = () => {
-    handleLogin(username, password);
+    createUser(username,password,email,name);
   };
 
   return (
     <div className={styles.container}>
-      
       <div className={styles.panel}>
         <Banner></Banner>
-        <h2 className={styles.title}>Login</h2>
+        <h2 className={styles.title}>Sign In</h2>
         <input
           type="text"
           placeholder="Username"
           className={styles.input}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Email"
+          className={styles.input}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="name"
+          className={styles.input}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <input
           type="password"
@@ -32,11 +47,8 @@ export default function LoginMainPanel() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className={styles.button} onClick={handleSubmit}>
-          Login
+          Sign In
         </button>
-        <p className={styles.register}>
-          Don’t have an account? <a href="/register">Register here</a>
-        </p>
       </div>
     </div>
   );
