@@ -2,11 +2,14 @@ import { IsNotEmpty, IsOptional, isUUID, IsUUID } from 'class-validator';
 
 export class OpenAIRequestDto {
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsUUID()
   documentId: string;
 
   @IsNotEmpty()
   body: Buffer;
+
+  @IsNotEmpty()
+  extension: string;
 
 }

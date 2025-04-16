@@ -111,7 +111,7 @@ export default function HomeMainPanel() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ documentId }),
+        body: JSON.stringify({ documentId, extension: uploadedFile.extension  }),
       });
       const data = await response.json();
       setAnalysisResult(data.body);
