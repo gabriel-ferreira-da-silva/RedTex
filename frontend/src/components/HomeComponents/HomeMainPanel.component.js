@@ -3,25 +3,110 @@ import styles from './Home.module.css';
 import upload from '../../assets/upload.svg';
 import FileView from './FileView.component';
 import ResponsePanel from './ResponsePanel.component';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 export default function HomeMainPanel() {
   const fileInputRef = useRef(null);
-  const [uploadedFile, setUploadedFile] = useState(null); 
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [analysisResult, setAnalysisResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [document, setDocument] = useState(null)
+  const [docMetadata, setDocMetadata] = useState(null); // <-- Renomeado aqui
+  
+  function wrapText(text, font, fontSize, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+  
+    for (let word of words) {
+      const testLine = currentLine ? currentLine + ' ' + word : word;
+      const width = font.widthOfTextAtSize(testLine, fontSize);
+  
+      if (width < maxWidth) {
+        currentLine = testLine;
+      } else {
+        if (currentLine) lines.push(currentLine);
+        currentLine = word;
+      }
+    }
+  
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+  
+    return lines;
+  }
 
+  
 
+  const handleDownloadAppendedPDF = async () => {
+    if (!uploadedFile || !analysisResult) {
+      alert('You need to upload a file and run analysis first.');
+      return;
+    }
+
+    const fileData = await fetch(uploadedFile.url);
+    const fileBuffer = await fileData.arrayBuffer();
+    const originalPdf = await PDFDocument.load(fileBuffer);
+    const newPdf = await PDFDocument.create();
+
+    // Copy original pages
+    const copiedPages = await newPdf.copyPages(originalPdf, originalPdf.getPageIndices());
+    copiedPages.forEach(page => newPdf.addPage(page));
+
+    // Add new page with the response
+    const page = newPdf.addPage();
+    const { width, height } = page.getSize();
+    const font = await newPdf.embedFont(StandardFonts.Helvetica);
+    
+    const fontSize = 12;
+    const margin = 50;
+    const maxWidth = width - 2 * margin;
+    
+    const lines = analysisResult.split('\n');
+    let y = height - margin;
+    
+    for (let line of lines) {
+      const wrappedLines = wrapText(line, font, fontSize, maxWidth);
+    
+      for (const wrappedLine of wrappedLines) {
+        if (y < margin) {
+          page = newPdf.addPage();
+          y = height - margin;
+        }
+    
+        page.drawText(wrappedLine, {
+          x: margin,
+          y,
+          size: fontSize,
+          font,
+          color: rgb(0, 0, 0),
+        });
+    
+        y -= fontSize + 4;
+      }
+    }
+    
+
+    const pdfBytes = await newPdf.save();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    const a = window.document.createElement('a');
+    a.href = url;
+    a.download = 'document_with_analysis.pdf';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
   const handleAnalysisRequest = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const documentId = uploadedFile?.id; // assuming you have it, or save it during upload
-      const response = await fetch(`http://localhost:4000/openairesponse/analyzis`,{
+      const documentId = uploadedFile?.id;
+      const response = await fetch(`http://localhost:4000/openairesponse/analyzis`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,15 +114,14 @@ export default function HomeMainPanel() {
         body: JSON.stringify({ documentId }),
       });
       const data = await response.json();
-      setAnalysisResult(data.body); // assuming 'body' holds the analysis text
+      setAnalysisResult(data.body);
     } catch (err) {
       console.error('Analysis failed:', err);
       setAnalysisResult('Analysis failed. Try again later.');
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
-  
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -45,7 +129,6 @@ export default function HomeMainPanel() {
 
     const base64 = await toBase64(file);
     const extension = file.name.split('.').pop();
-
     const user = JSON.parse(localStorage.getItem('user'));
 
     const payload = {
@@ -67,22 +150,19 @@ export default function HomeMainPanel() {
 
       const data = await response.json();
       console.log('Upload success:', data);
-      setDocument(data)
-      
+      setDocMetadata(data);
+
       const byteValues = Object.values(data.body);
       const byteArray = new Uint8Array(byteValues);
-      
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       const fileUrl = URL.createObjectURL(blob);
-      
+
       setUploadedFile({
         id: data.id,
         name: data.name,
         extension: data.extension,
         url: fileUrl,
       });
-      
-
     } catch (err) {
       console.error('Upload failed:', err);
     }
@@ -96,40 +176,41 @@ export default function HomeMainPanel() {
       reader.onerror = (error) => reject(error);
     });
 
-    return (
-      <div className={styles.container}>
-    
+  return (
+    <div className={styles.container}>
+      <div className={styles.uploadActions}>
         <div className={styles.uploadButton} onClick={handleUploadClick}>
           <div className={styles.textButton}>Upload File</div>
           <img src={upload} alt="upload" className={styles.imageButton} />
         </div>
-    
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        />
-    
-        {uploadedFile && (
-          <div className={styles.viewAndChatContainer}>
-            
-            <div className={styles.previewSection}>
-              <FileView uploadedFile={uploadedFile} />
-            </div>
-    
-            <div className={styles.responseSection}>
-              <ResponsePanel
-                isLoading={isLoading}
-                analysisResult={analysisResult}
-                handleAnalysisRequest={handleAnalysisRequest}
-              />
-            </div>
-    
-          </div>
-        )}
-    
+
+        <button className={styles.downloadButton} onClick={handleDownloadAppendedPDF}>
+          Download Appended
+        </button>
       </div>
-    );
-    
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
+
+      {uploadedFile && (
+        <div className={styles.viewAndChatContainer}>
+          <div className={styles.previewSection}>
+            <FileView uploadedFile={uploadedFile} />
+          </div>
+
+          <div className={styles.responseSection}>
+            <ResponsePanel
+              isLoading={isLoading}
+              analysisResult={analysisResult}
+              handleAnalysisRequest={handleAnalysisRequest}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
