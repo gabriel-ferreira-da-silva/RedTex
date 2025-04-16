@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { jsPDF } from 'jspdf';
 
 export default function ImageOCRPanel() {
   const fileInputRef = useRef(null);
@@ -73,6 +74,25 @@ export default function ImageOCRPanel() {
       reader.onerror = reject;
     });
 
+  const downloadPDF = () => {
+    if (!uploadedImage || !analysisResult) return;
+
+    const doc = new jsPDF();
+
+    // Add the uploaded image
+    const img = new Image();
+    img.src = uploadedImage.url;
+    img.onload = () => {
+      doc.addImage(img, 'JPEG', 10, 10, 180, 160);
+
+      // Add the analysis result below the image
+      doc.text(analysisResult, 10, 180);
+
+      // Save the PDF
+      doc.save(`${uploadedImage.name}-analysis.pdf`);
+    };
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Upload Invoice Image</h2>
@@ -101,6 +121,12 @@ export default function ImageOCRPanel() {
               <h3>Analysis Result</h3>
               <pre style={{ whiteSpace: 'pre-wrap' }}>{analysisResult}</pre>
             </div>
+          )}
+
+          {analysisResult && (
+            <button onClick={downloadPDF} style={{ marginTop: 20 }}>
+              Download as PDF
+            </button>
           )}
         </>
       )}
