@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { OpenAIResponsesRepository } from './OpenAIResponses.repository';
 import { OpenAIResponseDto } from './dto/OpenAIResponse.dto';
 import OpenAI from 'openai';
@@ -16,6 +16,7 @@ export class OpenAIResponsesService {
  
   constructor(
     private readonly openAIResponseRepo: OpenAIResponsesRepository,
+    @Inject(forwardRef(() => DocumentsService))
     private readonly documentsService: DocumentsService,
   ) {
     this.openai = new OpenAI({
@@ -56,6 +57,10 @@ export class OpenAIResponsesService {
     return this.openAIResponseRepo.getAll();
   }
 
+  getByDocumentId(documentId: string){
+    return this.openAIResponseRepo.findByDocumentId(documentId);
+  }
+
   createOpenAIResponse(dto: CreateOpenAIResponseDto): Promise<OpenAIResponseDto>{
     return this.openAIResponseRepo.create(dto);
   }
@@ -68,15 +73,18 @@ export class OpenAIResponsesService {
   async analyzeFromDocumentId(documentId: string): Promise<OpenAIResponseDto> {
     const document = await this.documentsService.findById(documentId);
     
-    if (!document) {
+    const { documentDTO } = document;
+  
+    if (!documentDTO) {
       throw new NotFoundException(`Document with ID ${documentId} not found`);
     }
   
     const openAIRequest = new OpenAIRequestDto();
-    openAIRequest.body = Buffer.from(document.body); 
-    openAIRequest.documentId = document.id;
+    openAIRequest.body = Buffer.from(documentDTO.body);
+    openAIRequest.documentId = documentDTO.id;
   
     return this.analyze(openAIRequest);
   }
+  
   
 }

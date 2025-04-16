@@ -10,7 +10,7 @@ export class DocumentsRepository {
     return this.prisma.documents.findMany();
   }
   
-  getById(documentId: string) {
+  getById(documentId: string){
     return this.prisma.documents.findUnique({
       where:{
         id: documentId,

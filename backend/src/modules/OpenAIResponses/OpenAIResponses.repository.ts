@@ -9,6 +9,14 @@ export class OpenAIResponsesRepository {
     return this.prisma.openAIResponses.findMany();
   }
 
+  findByDocumentId(documentId:string){
+    return this.prisma.openAIResponses.findFirst({
+      where:{
+        documentId:documentId,
+      }
+    });
+  }
+
   create(data: any) {
     return this.prisma.openAIResponses.create({ data });
   }
