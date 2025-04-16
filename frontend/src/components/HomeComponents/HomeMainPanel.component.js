@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styles from './Home.module.css';
 import upload from '../../assets/upload.svg';
-import ai from '../../assets/ai.svg';
 import FileView from './FileView.component';
+import ResponsePanel from './ResponsePanel.component';
 
 export default function HomeMainPanel() {
   const fileInputRef = useRef(null);
@@ -113,23 +113,19 @@ export default function HomeMainPanel() {
 
       {uploadedFile && (
         <div className={styles.viewAndChatContainer}>
+          
           <div className={styles.previewSection}>
             <FileView uploadedFile={uploadedFile} />
           </div>
-          <div className={styles.textAndButtonContainer}>
-                      {isLoading && (
-              <div className={styles.loadingOverlay}>
-                <div className={styles.spinner}></div>
-                <p>Analyzing document...</p>
-              </div>
-            )}
 
-            <p>{analysisResult || "Click to get AI analysis"}</p>
-            <div className={styles.uploadButton} onClick={handleAnalysisRequest}>
-              <div className={styles.textButton}>AI analysis</div>
-              <img src={ai} alt="upload" className={styles.imageButton} />
-            </div>
-          </div>
+          <ResponsePanel
+            isLoading={isLoading}
+            analysisResult={analysisResult}
+            handleAnalysisRequest={handleAnalysisRequest}
+          />
+
+
+          
         </div>
       )}
 

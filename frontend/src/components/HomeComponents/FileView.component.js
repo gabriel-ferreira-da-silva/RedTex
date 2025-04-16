@@ -5,7 +5,7 @@ import styles from './Home.module.css'
 export default function FileView({uploadedFile}) {
   return (
     <div className={styles.previewSection}>
-          <h3>Uploaded File: {uploadedFile.name}</h3>
+          <h3>{uploadedFile.name}</h3>
           {uploadedFile.extension === 'pdf' ? (
             <iframe
               src={uploadedFile.url}

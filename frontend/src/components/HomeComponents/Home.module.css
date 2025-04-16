@@ -75,7 +75,7 @@
 
 .spinner {
   border: 6px solid #f3f3f3;
-  border-top: 6px solid #007BFF;
+  border-top: 6px solid red;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -86,4 +86,35 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+.markdownContainer {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #374151;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.markdownContainer h1,
+.markdownContainer h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdownContainer p {
+  margin-bottom: 0.75rem;
+}
+
+.markdownContainer ul {
+  padding-left: 1.25rem;
+}
+
+.markdownContainer li {
+  margin-bottom: 0.5rem;
 }

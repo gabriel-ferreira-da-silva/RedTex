@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
 import styles from './History.module.css';
 
