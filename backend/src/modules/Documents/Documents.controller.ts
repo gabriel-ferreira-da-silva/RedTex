@@ -22,4 +22,9 @@ export class DocumentsController {
     return this.documentsService.findById(documentId);
   }
   
+  @Get("/byUser/:userId")
+  findByUserId(@Param("userId") userId: string) {
+    return this.documentsService.findByUserId(userId);
+  }
+  
 }

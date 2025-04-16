@@ -25,8 +25,13 @@ export class DocumentsService {
     const openAIResponse = await this.openAIResponseService.getByDocumentId(documentId);
     
     return {
-      document:documentDTO,
+      documentDTO:documentDTO,
       response:openAIResponse
     }
+  }
+
+
+  findByUserId(UserId:string){
+    return  this.documentsRepo.getByUserId(UserId);  
   }
 }

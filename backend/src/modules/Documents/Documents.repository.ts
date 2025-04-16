@@ -18,6 +18,19 @@ export class DocumentsRepository {
     })
   }
   
+
+  async getByUserId(userId: string) {
+    return this.prisma.documents.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        responses: true,
+      },
+    });
+  }
+  
+  
   create(data: any) {
     return this.prisma.documents.create({ data });
   }
