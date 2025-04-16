@@ -17,7 +17,6 @@ export class UsersRepository {
       },
     });
   }
-  
 
   create(data: any) {
     return this.prisma.users.create({ data });

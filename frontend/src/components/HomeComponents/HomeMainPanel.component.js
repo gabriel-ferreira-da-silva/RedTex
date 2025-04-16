@@ -46,10 +46,12 @@ export default function HomeMainPanel() {
     const base64 = await toBase64(file);
     const extension = file.name.split('.').pop();
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const payload = {
       name: file.name.split('.')[0],
-      description: 'huhuhuhuhuhuhuhuhu',
-      userId: '56067545-e6f4-4245-ba97-7786f54e7ccc',
+      description: '',
+      userId: user.id,
       body: base64.replace(/^data:.*;base64,/, ''),
       extension: extension,
     };
