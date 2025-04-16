@@ -1,7 +1,7 @@
 // src/modules/OpenAIResponses/OpenAIResponses.module.ts
 
 import { forwardRef, Module } from '@nestjs/common';
-import { PrismaModule } from 'database/prisma.module';
+import { PrismaModule } from 'src/database/prisma.module';
 
 import { OpenAIResponseController } from './OpenAIResponses.controller';
 import { OpenAIResponsesRepository } from './OpenAIResponses.repository';

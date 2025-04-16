@@ -13,8 +13,8 @@ const Tesseract = require('tesseract.js');
 
 @Injectable()
 export class OpenAIResponsesService {
-  private openai: OpenAI;
-  private visionClient: ImageAnnotatorClient;
+  visionClient: any;
+  openai: OpenAI;
  
   constructor(
     private readonly openAIResponseRepo: OpenAIResponsesRepository,

@@ -16,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "rootDir": "./src"  // Add this line to ensure TypeScript knows where your source files are located
   },
   "include": [
     "src/**/*.ts"

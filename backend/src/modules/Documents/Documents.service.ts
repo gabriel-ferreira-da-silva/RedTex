@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DocumentsRepository } from './Documents.repository';
 import { CreateDocumentDto } from './dto/CreateDocument.dto';
-import { DocumentDto } from './dto/Document.dto';
 import { OpenAIResponsesService } from '../OpenAIResponses/OpenAIResponses.service';
 
 @Injectable()
