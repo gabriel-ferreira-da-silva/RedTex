@@ -39,3 +39,29 @@
     margin-bottom: 1rem;
   }
   
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .pdfSection {
+    flex: 0 0 70%;
+    padding: 16px;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    background-color: #fafafa;
+  }
+  
+  .responseSection {
+    flex: 0 0 30%;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #ffffff;
+  }
+  

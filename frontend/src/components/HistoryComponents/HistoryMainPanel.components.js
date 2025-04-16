@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { getDocuments } from '../../services/document.services';
 import DocumentCard from './DocumentCard.component';
+import { useNavigate } from 'react-router-dom';
 
 export default function HistoryMainPanel() {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/history/${id}`);
+  };
+
 
   useEffect(() => {
     async function fetchDocuments() {
@@ -33,7 +41,7 @@ export default function HistoryMainPanel() {
       ) : (
         <ul>
           {documents.map((doc) => (
-            <div key={doc.id}>
+            <div key={doc.id} onClick={() => handleClick(doc.id)}>
               <DocumentCard
               name={doc.name}
               date={doc.createdAt}

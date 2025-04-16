@@ -96,39 +96,40 @@ export default function HomeMainPanel() {
       reader.onerror = (error) => reject(error);
     });
 
-  return (
-    <div className={styles.container}>
-
-      <div className={styles.uploadButton} onClick={handleUploadClick}>
-        <div className={styles.textButton}>Upload File</div>
-        <img src={upload} alt="upload" className={styles.imageButton} />
-      </div>
-
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
-
-      {uploadedFile && (
-        <div className={styles.viewAndChatContainer}>
-          
-          <div className={styles.previewSection}>
-            <FileView uploadedFile={uploadedFile} />
-          </div>
-
-          <ResponsePanel
-            isLoading={isLoading}
-            analysisResult={analysisResult}
-            handleAnalysisRequest={handleAnalysisRequest}
-          />
-
-
-          
+    return (
+      <div className={styles.container}>
+    
+        <div className={styles.uploadButton} onClick={handleUploadClick}>
+          <div className={styles.textButton}>Upload File</div>
+          <img src={upload} alt="upload" className={styles.imageButton} />
         </div>
-      )}
-
-    </div>
-  );
+    
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+    
+        {uploadedFile && (
+          <div className={styles.viewAndChatContainer}>
+            
+            <div className={styles.previewSection}>
+              <FileView uploadedFile={uploadedFile} />
+            </div>
+    
+            <div className={styles.responseSection}>
+              <ResponsePanel
+                isLoading={isLoading}
+                analysisResult={analysisResult}
+                handleAnalysisRequest={handleAnalysisRequest}
+              />
+            </div>
+    
+          </div>
+        )}
+    
+      </div>
+    );
+    
 }

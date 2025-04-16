@@ -15,6 +15,7 @@ export class DocumentsService {
     return this.documentsRepo.getAll();
   }
 
+
   createUser(dto: CreateDocumentDto) {
     dto.body = Buffer.from(dto.body as any, 'base64');  
     return this.documentsRepo.create(dto);

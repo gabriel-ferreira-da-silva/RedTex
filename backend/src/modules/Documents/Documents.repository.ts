@@ -15,6 +15,9 @@ export class DocumentsRepository {
       where:{
         id: documentId,
       },
+      include: {
+        responses: true,
+      },
     })
   }
   
