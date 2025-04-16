@@ -29,6 +29,7 @@
     "class-validator": "^0.14.1",
     "dotenv": "^16.5.0",
     "openai": "^4.93.0",
+    "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
     "react-router-dom": "^7.5.0",
     "reflect-metadata": "^0.2.2",
