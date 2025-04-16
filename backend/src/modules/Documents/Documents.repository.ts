@@ -10,13 +10,29 @@ export class DocumentsRepository {
     return this.prisma.documents.findMany();
   }
   
-  getById(documentId: string) {
+  getById(documentId: string){
     return this.prisma.documents.findUnique({
       where:{
         id: documentId,
       },
+      include: {
+        responses: true,
+      },
     })
   }
+  
+
+  async getByUserId(userId: string) {
+    return this.prisma.documents.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        responses: true,
+      },
+    });
+  }
+  
   
   create(data: any) {
     return this.prisma.documents.create({ data });

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { UsersService } from './Users.service';
 import { CreateUserDto } from './dto/CreateUsers.dto';
 import { JwtAuthGuard } from '../Auth/guard/jwt-auth.guard';
@@ -19,4 +19,10 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
+
+  @Get('/username/:username')
+  findByUsername(@Param("username") username: string) {
+    return this.usersService.findByUsername(username);
+  }
+
 }
