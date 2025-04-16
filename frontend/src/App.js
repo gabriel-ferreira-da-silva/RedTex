@@ -6,7 +6,7 @@ import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import HistoryPage from './pages/HistoryPage';
 import DocumentPage from './pages/DocumentPage';
-
+import OCRPage from './pages/OCRPage';
 function App() {
 
   return (
@@ -16,6 +16,7 @@ function App() {
         <Route path="/login" element={<LoginPage /> }/>
         <Route path="/register" element={<RegisterPage /> }/>
         <Route path="/home" element={<HomePage /> }/>
+        <Route path="/ocr" element={<OCRPage /> }/>
         <Route path="/history" element={<HistoryPage /> }/>
         <Route path="/history/:docId" element={<DocumentPage />} />
       </Routes>

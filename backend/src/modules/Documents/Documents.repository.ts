@@ -9,7 +9,7 @@ export class DocumentsRepository {
   getAll() {
     return this.prisma.documents.findMany();
   }
-  
+
   getById(documentId: string){
     return this.prisma.documents.findUnique({
       where:{
