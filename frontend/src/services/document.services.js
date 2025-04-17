@@ -2,7 +2,7 @@ export async function getDocuments() {
     const user = JSON.parse(localStorage.getItem('user'));
   
     try {
-      const response = await fetch(`http://localhost:4000/documents/byUser/${user.id}`, {
+      const response = await fetch(`https://redtex.onrender.com/documents/byUser/${user.id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function getDocuments() {
   export async function getDocumentById(documentId) {
   
     try {
-      const response = await fetch(`http://localhost:4000/documents/${documentId}`, {
+      const response = await fetch(`https://redtex.onrender.com/${documentId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

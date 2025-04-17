@@ -28,7 +28,7 @@ export default function ImageOCRPanel() {
     };
 
     try {
-      const response = await fetch('http://localhost:4000/documents', {
+      const response = await fetch('https://redtex.onrender.com/documents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -50,7 +50,7 @@ export default function ImageOCRPanel() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:4000/openairesponse/analyzis`, {
+      const response = await fetch(`https://redtex.onrender.com/openairesponse/analyzis`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ documentId: uploadedImage.id }),

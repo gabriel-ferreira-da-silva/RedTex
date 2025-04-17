@@ -1,6 +1,6 @@
 export async function createUser(username, password, email, name) {
     try {
-      const response = await fetch('http://localhost:4000/users', {
+      const response = await fetch('https://redtex.onrender.com/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ export async function createUser(username, password, email, name) {
         throw new Error('Invalid credentials');
       }
   
-      const userResponse = await fetch(`http://localhost:4000/users/username/${username}`);
+      const userResponse = await fetch(`https://redtex.onrender.com/users/username/${username}`);
   
       const data = await response.json();
       console.log('Logged in:', data);
