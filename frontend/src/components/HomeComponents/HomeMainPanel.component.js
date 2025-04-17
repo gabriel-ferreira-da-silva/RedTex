@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styles from './Home.module.css';
 import upload from '../../assets/upload.svg';
+import download from '../../assets/dowload.svg';
 import FileView from './FileView.component';
 import ResponsePanel from './ResponsePanel.component';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
@@ -37,7 +38,6 @@ export default function HomeMainPanel() {
   }
 
   
-
   const handleDownloadAppendedPDF = async () => {
     if (!uploadedFile || !analysisResult) {
       alert('You need to upload a file and run analysis first.');
@@ -106,7 +106,7 @@ export default function HomeMainPanel() {
     setIsLoading(true);
     try {
       const documentId = uploadedFile?.id;
-      const response = await fetch(`http://localhost:4000/openairesponse/analyzis`, {
+      const response = await fetch(`https://redtex.onrender.com/openairesponse/analyzis`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ export default function HomeMainPanel() {
     };
 
     try {
-      const response = await fetch('http://localhost:4000/documents', {
+      const response = await fetch('https://redtex.onrender.com/documents', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -185,7 +185,8 @@ export default function HomeMainPanel() {
         </div>
 
         <button className={styles.downloadButton} onClick={handleDownloadAppendedPDF}>
-          Download Appended
+          <div className={styles.textButton}>dowload appended</div>
+          <img src={download} alt="upload" className={styles.imageButton} />
         </button>
       </div>
 
