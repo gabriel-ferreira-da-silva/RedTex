@@ -3,6 +3,7 @@ import { jsPDF } from 'jspdf';
 import style from './ImageOCR.module.css'
 import styles from '../HomeComponents/Home.module.css'
 import ReactMarkdown from 'react-markdown';
+import image from '../../assets/imagelogo.svg'
 
 export default function ImageOCRPanel() {
   const fileInputRef = useRef(null);
@@ -95,6 +96,7 @@ export default function ImageOCRPanel() {
 
       <div className={style.uploadButton} onClick={handleUploadClick}>
         <div className={style.textButton}>Upload Image</div>
+        <img src={image} alt="upload" className={style.imageButton} />
       </div>
 
       <input

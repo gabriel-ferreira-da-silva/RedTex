@@ -180,7 +180,7 @@ export default function HomeMainPanel() {
     <div className={styles.container}>
       <div className={styles.uploadActions}>
         <div className={styles.uploadButton} onClick={handleUploadClick}>
-          <div className={styles.textButton}>Upload File</div>
+          <div className={styles.textButton}>Upload PDF</div>
           <img src={upload} alt="upload" className={styles.imageButton} />
         </div>
 
