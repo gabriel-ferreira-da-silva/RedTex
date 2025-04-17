@@ -1,7 +1,7 @@
 // src/modules/Documents/Documents.module.ts
 
 import { forwardRef, Module } from '@nestjs/common';
-import { PrismaModule } from 'src/database/prisma.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 import { DocumentsController } from './Documents.controller';
 import { DocumentsRepository } from './Documents.repository';
