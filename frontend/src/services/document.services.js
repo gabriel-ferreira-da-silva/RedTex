@@ -2,12 +2,7 @@ export async function getDocuments() {
     const user = JSON.parse(localStorage.getItem('user'));
   
     try {
-      const response = await fetch(`https://redtex.onrender.com/documents/byUser/${user.id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+      const response = await fetch(`https://redtex.onrender.com/documents/byUser/${user.id}`);
   
       if (!response.ok) {
         throw new Error('Invalid credentials');
@@ -26,12 +21,7 @@ export async function getDocuments() {
   export async function getDocumentById(documentId) {
   
     try {
-      const response = await fetch(`https://redtex.onrender.com/${documentId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+      const response = await fetch(`https://redtex.onrender.com/documents/${documentId}`);
   
       if (!response.ok) {
         throw new Error('Invalid credentials');
