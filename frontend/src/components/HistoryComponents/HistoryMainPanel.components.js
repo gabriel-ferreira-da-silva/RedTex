@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getDocuments } from '../../services/document.services';
 import DocumentCard from './DocumentCard.component';
 import { useNavigate } from 'react-router-dom';
+import styles from '../HomeComponents/Home.module.css'
 
 export default function HistoryMainPanel() {
   const [documents, setDocuments] = useState([]);
@@ -30,12 +31,11 @@ export default function HistoryMainPanel() {
     fetchDocuments();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className={styles.loadingOverlay}> <div className={styles.spinner}></div> <p>fetching documents</p> </div>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      <h2>User Document History</h2>
       {documents.length === 0 ? (
         <p>No documents found.</p>
       ) : (
