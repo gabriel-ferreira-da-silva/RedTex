@@ -1,5 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { jsPDF } from 'jspdf';
+import style from './ImageOCR.module.css'
+import styles from '../HomeComponents/Home.module.css'
+import ReactMarkdown from 'react-markdown';
 
 export default function ImageOCRPanel() {
   const fileInputRef = useRef(null);
@@ -78,26 +81,22 @@ export default function ImageOCRPanel() {
     if (!uploadedImage || !analysisResult) return;
 
     const doc = new jsPDF();
-
-    // Add the uploaded image
     const img = new Image();
     img.src = uploadedImage.url;
     img.onload = () => {
       doc.addImage(img, 'JPEG', 10, 10, 180, 160);
-
-      // Add the analysis result below the image
       doc.text(analysisResult, 10, 180);
-
-      // Save the PDF
       doc.save(`${uploadedImage.name}-analysis.pdf`);
     };
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Upload Invoice Image</h2>
+    <div className={style.container}>
 
-      <button onClick={handleUploadClick}>Upload Image</button>
+      <div className={style.uploadButton} onClick={handleUploadClick}>
+        <div className={style.textButton}>Upload Image</div>
+      </div>
+
       <input
         type="file"
         accept="image/*"
@@ -112,21 +111,31 @@ export default function ImageOCRPanel() {
             <img src={uploadedImage.url} alt="Uploaded" style={{ maxWidth: '100%' }} />
           </div>
 
-          <button onClick={handleAnalysisRequest} style={{ marginTop: 10 }}>
-            {isLoading ? 'Analyzing...' : 'Run Analysis'}
-          </button>
+          <div className={style.uploadButton} onClick={handleAnalysisRequest}>
+            {isLoading ? 
+              <div className={styles.loadingOverlay}>
+                <div className={styles.spinner}></div>
+                <p>Analyzing document...</p>
+              </div> : 
+              <div className={style.textButton}>Run</div>
+            }
+          </div>
 
           {analysisResult && (
-            <div style={{ marginTop: 20 }}>
+            <div className={style.responseSection}>
               <h3>Analysis Result</h3>
-              <pre style={{ whiteSpace: 'pre-wrap' }}>{analysisResult}</pre>
+              <pre style={{ whiteSpace: 'pre-wrap' }}>
+                <ReactMarkdown>
+                          {analysisResult || "Click to get AI analysis"}
+                </ReactMarkdown>
+                </pre>
             </div>
           )}
 
           {analysisResult && (
-            <button onClick={downloadPDF} style={{ marginTop: 20 }}>
-              Download as PDF
-            </button>
+            <div className={style.uploadButton} onClick={downloadPDF} style={{ marginTop: 20 }}>
+              <div className={style.textButton}>Dowload</div>
+            </div>
           )}
         </>
       )}

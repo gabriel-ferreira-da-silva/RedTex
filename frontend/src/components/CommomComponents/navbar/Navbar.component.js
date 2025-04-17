@@ -11,8 +11,6 @@ export default function Navbar() {
         <li><a href="/home">Read PDF</a></li>
         <li><a href="/ocr">Read Image</a></li>
         <li><a href="/history">History</a></li>
-        <li><a href="/about">About</a></li>
-
       </ul>
     </nav>
   );

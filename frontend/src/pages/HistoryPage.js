@@ -5,7 +5,6 @@ export default function HistoryPage() {
   return (
     <div>
       <Navbar/>
-      history
       <HistoryMainPanel/>
     </div>
   );

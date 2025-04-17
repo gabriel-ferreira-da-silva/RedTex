@@ -13,11 +13,12 @@ export default function FileView({uploadedFile}) {
               className={styles.previewFrame}
             />
           ) : (
-            <a href={uploadedFile.url} download={uploadedFile.name}>
-              Download {uploadedFile.name}
-            </a>
+            <img
+              src={uploadedFile.url}
+              alt={uploadedFile.name}
+              className={styles.previewImage} // you can define this in CSS
+            />
           )}
         </div>
   );
 }
-
