@@ -99,6 +99,10 @@ export default function ImageOCRPanel() {
         <img src={image} alt="upload" className={style.imageButton} />
       </div>
 
+      <p className={styles.register}>
+        please load small size, less then 100kb
+      </p>
+
       <input
         type="file"
         accept="image/*"

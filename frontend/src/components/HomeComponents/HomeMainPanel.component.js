@@ -189,7 +189,10 @@ export default function HomeMainPanel() {
           <img src={download} alt="upload" className={styles.imageButton} />
         </button>
       </div>
-
+  
+      <p className={styles.register}>
+        please load small size, less then 100kb
+      </p>
       <input
         type="file"
         ref={fileInputRef}

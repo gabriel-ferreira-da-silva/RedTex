@@ -158,3 +158,8 @@
   cursor: pointer;
   margin-top: 2rem;
 }
+
+.register {
+  margin-top: 15px;
+  font-size: 14px;
+}

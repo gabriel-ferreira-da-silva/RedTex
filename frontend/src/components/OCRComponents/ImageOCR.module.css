@@ -155,3 +155,8 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.register {
+  margin-top: 15px;
+  font-size: 14px;
+}
